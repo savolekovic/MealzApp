@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -17,6 +18,8 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,34 +30,59 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.wear.compose.material.ContentAlpha
 import androidx.wear.compose.material.Icon
 import coil.compose.AsyncImage
 import com.example.mealzapp.model.response.Category
-import com.example.mealzapp.ui.theme.MealzAppTheme
+import com.example.mealzapp.ui.MealDetails
+import com.example.mealzapp.ui.composables.TopBar
 
 @Composable
-fun MealsCategoriesScreen() {
-    val viewModel: MealCategoriesViewModel = viewModel()
+fun MealsListScreen(
+    navController: NavController
+) {
+    val viewModel: MealsListViewModel = viewModel()
     val mealsState = viewModel.mealsState.value
-    LazyColumn(contentPadding = PaddingValues(16.dp)) {
-        items(mealsState) { meal ->
-            MealCategory(meal)
+
+    Scaffold(
+        topBar = {
+            TopBar(title = "List of meals", icon = null) {}
+        },
+    ) { innerPadding ->
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            LazyColumn(contentPadding = PaddingValues(16.dp)) {
+                items(mealsState) { meal ->
+                    MealCategory(meal) {
+                        navController.navigate(
+                            MealDetails(
+                                id = meal.id,
+                                name = meal.name
+                            )
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
+
 @Composable
-fun MealCategory(meal: Category) {
+fun MealCategory(meal: Category, clickAction: () -> Unit) {
     var isExpanded by remember { mutableStateOf(false) }
     Card(
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
         ),
+        onClick = { clickAction.invoke() },
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp)
@@ -108,13 +136,5 @@ fun MealCategory(meal: Category) {
                     .clickable { isExpanded = !isExpanded }
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MealzAppTheme {
-        MealsCategoriesScreen()
     }
 }
