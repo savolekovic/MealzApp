@@ -17,6 +17,8 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -28,13 +30,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.wear.compose.material.ContentAlpha
-import androidx.wear.compose.material.Icon
 import coil.compose.AsyncImage
 import com.example.mealzapp.model.response.Category
 import com.example.mealzapp.ui.MealDetails
@@ -115,7 +114,7 @@ fun MealCategory(meal: Category, clickAction: () -> Unit) {
                     text = meal.description,
                     style = MaterialTheme.typography.titleSmall,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.alpha(ContentAlpha.medium),
+                    color = LocalContentColor.current.copy(alpha = 0.6f),
                     maxLines = if (isExpanded) 10 else 4
                 )
             }
