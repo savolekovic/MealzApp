@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.mealzapp"
-        minSdk = 24
+        minSdk = 25
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -73,6 +73,7 @@ dependencies {
 
     //Coil
     implementation(libs.coil.compose)
+    implementation(libs.androidx.compose.material)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
