@@ -9,8 +9,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.example.mealzapp.ui.details.MealDetailsScreen
+import com.example.mealzapp.ui.categories.CategoryListScreen
 import com.example.mealzapp.ui.meals.MealsListScreen
+import com.example.mealzapp.ui.meals.details.MealDetailsScreen
 import com.example.mealzapp.ui.theme.MealzAppTheme
 import kotlinx.serialization.Serializable
 
@@ -41,6 +42,9 @@ fun MealsApplication() {
                 navController = navController
             )
         }
+        composable<CategoryList> {
+            CategoryListScreen(navController)
+        }
     }
 
 }
@@ -54,4 +58,7 @@ data class MealDetails(
     val id: String,
     val name: String
 )
+
+@Serializable
+object CategoryList
 

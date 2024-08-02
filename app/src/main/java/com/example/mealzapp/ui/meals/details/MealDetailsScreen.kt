@@ -1,4 +1,4 @@
-package com.example.mealzapp.ui.details
+package com.example.mealzapp.ui.meals.details
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -103,7 +103,7 @@ fun MealDetailsScreen(
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            text = meal.description,
+                            text = meal.instructions,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 8.dp, start = 12.dp, end = 12.dp),

@@ -1,4 +1,4 @@
-package com.example.mealzapp.ui.meals
+package com.example.mealzapp.ui.categories
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
@@ -35,16 +35,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.mealzapp.model.response.Meal
+import com.example.mealzapp.model.response.Category
 import com.example.mealzapp.ui.MealDetails
 import com.example.mealzapp.ui.composables.TopBar
 
 @Composable
-fun MealsListScreen(
+fun CategoryListScreen(
     navController: NavController
 ) {
-    val viewModel: MealsListViewModel = viewModel()
-    val mealsState = viewModel.mealsState.value
+    val viewModel: CategoryListViewModel = viewModel()
+    val categoriesState = viewModel.categoriesState.value
 
     Scaffold(
         topBar = {
@@ -57,12 +57,12 @@ fun MealsListScreen(
                 .padding(innerPadding)
         ) {
             LazyColumn(contentPadding = PaddingValues(16.dp)) {
-                items(mealsState) { meal ->
-                    MealItem(meal) {
+                items(categoriesState) { category ->
+                    MealCategory(category) {
                         navController.navigate(
                             MealDetails(
-                                id = meal.id,
-                                name = meal.name
+                                id = category.id,
+                                name = category.name
                             )
                         )
                     }
@@ -74,7 +74,7 @@ fun MealsListScreen(
 
 
 @Composable
-fun MealItem(meal: Meal, clickAction: () -> Unit) {
+fun MealCategory(category: Category, clickAction: () -> Unit) {
     var isExpanded by remember { mutableStateOf(false) }
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -90,7 +90,7 @@ fun MealItem(meal: Meal, clickAction: () -> Unit) {
             modifier = Modifier.animateContentSize()
         ) {
             AsyncImage(
-                model = meal.imageUrl,
+                model = category.imageUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .size(85.dp)
@@ -106,12 +106,12 @@ fun MealItem(meal: Meal, clickAction: () -> Unit) {
             )
             {
                 Text(
-                    text = meal.name,
+                    text = category.name,
                     style = MaterialTheme.typography.titleMedium
                 )
 
                 Text(
-                    text = meal.instructions,
+                    text = category.description,
                     style = MaterialTheme.typography.titleSmall,
                     overflow = TextOverflow.Ellipsis,
                     color = LocalContentColor.current.copy(alpha = 0.6f),
